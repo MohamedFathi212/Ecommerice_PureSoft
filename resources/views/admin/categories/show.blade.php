@@ -1,11 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Category Details')
-
 @section('content')
 <div class="card shadow-sm p-4 rounded-4">
     <h2>Category Details</h2>
 
-    <p><strong>ID:</strong> {{ $category->id }}</p>
     <p><strong>Name:</strong> {{ $category->name }}</p>
 
     <div class="mb-3">

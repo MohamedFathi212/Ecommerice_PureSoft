@@ -4,7 +4,6 @@
 @section('content')
 <div class="card shadow-sm rounded-4 p-4">
     <h2>SubCategory Details</h2>
-    <p><strong>ID:</strong> {{ $subcategory->id }}</p>
     <p><strong>Name:</strong> {{ $subcategory->name }}</p>
     <p><strong>Category:</strong> {{ $subcategory->category->name }}</p>
     @if($subcategory->image)

@@ -9,8 +9,8 @@
         <img src="{{ asset('images/products/' . $product->image) }}" class="img-fluid mb-3 rounded" style="max-width: 250px;">
     @endif
 
-    <p><strong>Category:</strong> {{ $product->category->name ?? '-' }}</p>
-    <p><strong>SubCategory:</strong> {{ $product->subcategory->name ?? '-' }}</p>
+    <p><strong>Category:</strong> {{ $product->category->name  }}</p>
+    <p><strong>SubCategory:</strong> {{ $product->subcategory->name }}</p>
     <p><strong>Description:</strong> {{ $product->description }}</p>
     <p><strong>Price:</strong> ${{ $product->price }}</p>
     <p><strong>Stock:</strong> {{ $product->stock }}</p>
