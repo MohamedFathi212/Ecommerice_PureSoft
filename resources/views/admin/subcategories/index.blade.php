@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'SubCategories')
-
 @section('content')
+
 <div class="card shadow-sm rounded-4 p-4">
     <h2>SubCategories</h2>
     <a href="{{ route('admin.subcategories.create') }}" class="btn btn-primary mb-3">+ Add SubCategory</a>

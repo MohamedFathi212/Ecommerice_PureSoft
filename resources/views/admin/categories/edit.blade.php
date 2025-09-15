@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit Category')
-
 @section('content')
+
 <div class="card shadow-sm p-4 rounded-4">
     <h2>Edit Category</h2>
 

@@ -23,7 +23,7 @@ class AdminCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'image' => 'required|nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $category = new Category();
@@ -67,6 +67,11 @@ class AdminCategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        $imagePath = public_path("images/categories/{$category->image}");
+        if ($category->image && file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        
         $category->delete();
         return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');
     }

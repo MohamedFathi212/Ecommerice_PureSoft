@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Manage Products')
-
 @section('content')
+
 <div class="card shadow-sm rounded-4 p-4">
     <h2>Products</h2>
     <a href="{{ route('admin.products.create') }}" class="btn btn-success mb-3">+ Add Product</a>
@@ -49,7 +49,6 @@
                 @endforeach
             </tbody>
         </table>
-
         {{ $products->links() }}
     @else
         <p class="text-muted">No products found.</p>

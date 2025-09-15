@@ -29,10 +29,10 @@ class AdminProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'required|exists:subcategories,id',
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'required|nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'image' => 'required|nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $product = new Product();
@@ -90,18 +90,14 @@ class AdminProductController extends Controller
         $product->stock = $request->stock;
 
         if ($request->hasFile('image')) {
-            // احذف الصورة القديمة لو موجودة
             if ($product->image && file_exists(public_path('images/products/' . $product->image))) {
                 unlink(public_path('images/products/' . $product->image));
             }
-
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images/products'), $imageName);
             $product->image = $imageName;
         }
-
         $product->save();
-
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }
 
@@ -112,9 +108,7 @@ class AdminProductController extends Controller
         if ($product->image && file_exists(public_path('images/products/' . $product->image))) {
             unlink(public_path('images/products/' . $product->image));
         }
-
         $product->delete();
-
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully');
     }
 }

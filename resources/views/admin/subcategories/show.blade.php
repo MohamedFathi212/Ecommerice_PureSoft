@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'SubCategory Details')
-
 @section('content')
+
 <div class="card shadow-sm rounded-4 p-4">
     <h2>SubCategory Details</h2>
     <p><strong>Name:</strong> {{ $subcategory->name }}</p>

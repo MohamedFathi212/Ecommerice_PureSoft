@@ -1,0 +1,49 @@
+@extends('layouts.app')
+@section('title', 'Manage Orders')
+
+@section('content')
+<div class="card shadow-sm rounded-4 p-4">
+    <h2>All Orders</h2>
+
+    @if($orders->count())
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th width="200">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($orders as $order)
+                    <tr>
+                        <td>#{{ $order->id }}</td>
+                        <td>{{ $order->user->name }}</td>
+                        <td>{{ $order->total_price }} EGP</td>
+                        <td>
+                            <span class="badge 
+                                @if($order->status == 'pending') bg-warning
+                                @elseif($order->status == 'processing') bg-info
+                                @elseif($order->status == 'completed') bg-success
+                                @else bg-danger @endif">
+                                {{ ucfirst($order->status) }}
+                            </span>
+                        </td>
+                        <td>{{ $order->created_at->format('Y-m-d H:i') }}</td>
+                        <td>
+                            <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-info btn-sm">View</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        {{ $orders->links() }}
+    @else
+        <p class="text-muted">No orders found.</p>
+    @endif
+</div>
+@endsection

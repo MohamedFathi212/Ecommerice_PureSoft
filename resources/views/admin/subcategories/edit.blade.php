@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit SubCategory')
-
 @section('content')
+
 <div class="card shadow-sm rounded-4 p-4">
     <h2>Edit SubCategory</h2>
     <form action="{{ route('admin.subcategories.update', $subcategory->id) }}" method="POST" enctype="multipart/form-data">

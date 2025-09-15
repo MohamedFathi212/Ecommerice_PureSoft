@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit Product')
-
 @section('content')
+
 <div class="card shadow-sm rounded-4 p-4">
     <h2>Edit Product</h2>
 

@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('title', 'Categories')
-
 @section('content')
 <div class="container">
     <h2 class="mb-4">All Categories</h2>
