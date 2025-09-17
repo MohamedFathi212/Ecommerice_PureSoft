@@ -3,7 +3,6 @@
 
 @section('content')
 <div class="d-flex">
-    <!-- Sidebar -->
     <div class="bg-dark text-white p-3 shadow vh-100" style="width: 240px; position: fixed; left: 0; top: 0;">
         <h4 class="text-center mb-4">Admin Panel</h4>
         <ul class="nav flex-column gap-2">
@@ -34,7 +33,6 @@
         </ul>
     </div>
 
-    <!-- Main Content -->
     <div class="flex-grow-1 p-4" style="margin-left: 240px;">
         <h2 class="mb-5">Welcome Back, <span class="text-primary">Admin</span></h2>
 
@@ -77,7 +75,7 @@
                             <th>Total</th>
                             <th>Status</th>
                             <th>Date</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,17 +83,30 @@
                         <tr>
                             <td>{{ $order->id }}</td>
                             <td>{{ $order->user->name }}</td>
-                            <td>${{ number_format($order->total, 2) }}</td>
+                            <td>${{ number_format($order->total_price, 2) }}</td>
                             <td>
                                 <span class="badge bg-{{ $order->status == 'completed' ? 'success' : ($order->status == 'pending' ? 'warning' : 'danger') }}">
                                     {{ ucfirst($order->status) }}
                                 </span>
                             </td>
                             <td>{{ $order->created_at->format('d M, Y h:i A') }}</td>
-                            <td>
+                            <td class="d-flex gap-2">
                                 <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-sm btn-outline-primary">
                                     <i class="bi bi-eye"></i> View
                                 </a>
+                                
+                                <a href="{{ route('admin.orders.edit', $order->id) }}" 
+                                class="btn btn-warning btn-sm">Edit</a>
+
+                                <!-- Delete Button -->
+                                <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" 
+                                      onsubmit="return confirm('Are you sure you want to delete this order?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @empty
@@ -110,7 +121,6 @@
     </div>
 </div>
 
-<!-- Custom CSS -->
 <style>
     .nav-link {
         transition: all 0.3s ease;

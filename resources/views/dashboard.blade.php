@@ -10,17 +10,17 @@
 
         <div class="mt-3 d-flex gap-2">
             <a href="{{ route('categories.index') }}" class="btn btn-primary">
-                🛍️ Start Shopping
+                 Start Shopping
             </a>
             <a href="{{ route('orders.index') }}" class="btn btn-success">
-                📦 My Orders
+                 My Orders
             </a>
         </div>
     </div>
 
     <!-- Orders Section -->
     <div class="card shadow-sm rounded-4 p-4">
-        <h4 class="mb-3">📌 Recent Orders</h4>
+        <h4 class="mb-3"> Recent Orders</h4>
 
         @if($orders->count())
             <table class="table table-hover align-middle">
@@ -37,17 +37,17 @@
                     @foreach($orders as $order)
                         <tr>
                             <td>{{ $order->id }}</td>
-                            <td>{{ number_format($order->total, 2) }} EGP</td>
+                            <td>{{ number_format($order->total_price, 2) }} EGP</td>
                             <td>
                                 <span class="badge 
                                     @if($order->status == 'pending') bg-warning
                                     @elseif($order->status == 'shipped') bg-info
-                                    @elseif($order->status == 'delivered') bg-success
+                                    @elseif($order->status == 'completed') bg-success
                                     @else bg-danger @endif">
-                                    @if($order->status == 'pending') ⏳
-                                    @elseif($order->status == 'shipped') 🚚
-                                    @elseif($order->status == 'delivered') ✅
-                                    @else ❌
+                                    @if($order->status == 'pending')
+                                    @elseif($order->status == 'shipped')
+                                    @elseif($order->status == 'delivered')
+                                    @else 
                                     @endif
                                     {{ ucfirst($order->status) }}
                                 </span>
@@ -65,8 +65,8 @@
             </table>
         @else
             <div class="alert alert-info mt-3 rounded-3">
-                You haven’t placed any orders yet. 🛒  
-                <a href="{{ route('categories.index') }}" class="alert-link">Start Shopping</a>
+                You haven’t placed any orders yet. 
+                <a href="{{ route('categories.index') }}" class="alert-link"><b>Start Shopping</b></a>
             </div>
         @endif
     </div>

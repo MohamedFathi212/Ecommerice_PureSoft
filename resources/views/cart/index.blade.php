@@ -1,35 +1,43 @@
 @extends('layouts.app')
-
-@section('title', 'My Cart')
+@section('title', 'Your Cart')
 
 @section('content')
-<div class="container">
-    <h2>Your Shopping Cart</h2>
-
-    @if($cartItems->isEmpty())
-        <p>Your cart is empty.</p>
-    @else
-        <table class="table table-bordered">
+<div class="container py-5">
+    <h2 class="mb-4">Your Cart</h2>
+    @if($cart && $cart->items->count() > 0)
+        <table class="table table-bordered align-middle">
             <thead>
                 <tr>
                     <th>Product</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                    <th>Remove</th>
+                    <th>Price (EGP)</th>
+                    <th>Quantity</th>
+                    <th>Total (EGP)</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($cartItems as $item)
+                @foreach($cart->items as $item)
                 <tr>
                     <td>{{ $item->product->name }}</td>
-                    <td>{{ $item->quantity }}</td>
-                    <td>${{ $item->product->price }}</td>
-                    <td>${{ $item->product->price * $item->quantity }}</td>
+                    <td>{{ number_format($item->product->price, 2) }}</td>
+                    <td>
+                        <form action="{{ route('cart.update', $item->id) }}" method="POST" class="d-flex">
+                            @csrf
+                            @method('PUT')
+                            <input type="number" 
+                                   name="quantity" 
+                                   value="{{ $item->quantity }}" 
+                                   min="1" 
+                                   class="form-control w-50 me-2">
+                            <button type="submit" class="btn btn-sm btn-warning">Update</button>
+                        </form>
+                    </td>
+                    <td>{{ number_format($item->product->price * $item->quantity, 2) }}</td>
                     <td>
                         <form action="{{ route('cart.remove', $item->id) }}" method="POST">
-                            @csrf @method('DELETE')
-                            <button class="btn btn-danger btn-sm">❌</button>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                         </form>
                     </td>
                 </tr>
@@ -37,7 +45,21 @@
             </tbody>
         </table>
 
-        <a href="{{ route('orders.checkout') }}" class="btn btn-success">Proceed to Checkout</a>
+        <h4 class="text-end">
+            Grand Total: 
+            <span class="text-success">{{ number_format($cart->total(), 2) }} EGP</span>
+        </h4>
+
+        <div class="d-flex justify-content-between mt-3">
+            <form action="{{ route('cart.clear') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-danger">Clear Cart</button>
+            </form>
+
+            <a href="{{ route('checkout') }}" class="btn btn-primary">Proceed to Checkout</a>
+        </div>
+    @else
+        <div class="alert alert-info">Your cart is empty.</div>
     @endif
 </div>
 @endsection

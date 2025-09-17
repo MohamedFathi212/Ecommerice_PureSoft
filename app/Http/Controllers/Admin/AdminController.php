@@ -16,7 +16,6 @@ class AdminController extends Controller
         $categoriesCount = Category::count();
         $productsCount = Product::count();
         $ordersCount = Order::count();
-
         $recentOrders = Order::with('user')->latest()->take(5)->get();
 
         return view('admin.dashboard', compact(

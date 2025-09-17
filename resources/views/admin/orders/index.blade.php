@@ -14,7 +14,7 @@
                     <th>Total</th>
                     <th>Status</th>
                     <th>Created At</th>
-                    <th width="200">Actions</th>
+                    <th width="250">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,7 +22,7 @@
                     <tr>
                         <td>#{{ $order->id }}</td>
                         <td>{{ $order->user->name }}</td>
-                        <td>{{ $order->total_price }} EGP</td>
+                        <td>{{ number_format($order->total_price, 2) }} EGP</td>
                         <td>
                             <span class="badge 
                                 @if($order->status == 'pending') bg-warning
@@ -33,8 +33,17 @@
                             </span>
                         </td>
                         <td>{{ $order->created_at->format('Y-m-d H:i') }}</td>
-                        <td>
-                            <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-info btn-sm">View</a>
+                        <td class="d-flex gap-2">
+                            <a href="{{ route('admin.orders.show', $order->id) }}" 
+                               class="btn btn-info btn-sm">View</a>
+
+                            <form action="{{ route('admin.orders.destroy', $order->id) }}" 
+                                  method="POST" 
+                                  onsubmit="return confirm('Are you sure you want to delete this order?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
